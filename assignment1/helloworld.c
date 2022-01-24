@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-// name: Jeongkyu Lee 
-// email: jeo.lee@northeastern.edu
+// name: Yulun Wang
+// email: wang.yulun@northeastern.edu
 
 int main() {
-  printf("Hello World.  This is [YourName].\n");
-  printf("I am assignment 1 for [This Semester].\n");
+  printf("Hello World.  This is Yulun Wang.\n");
+  printf("I am assignment 1 for Spring 2022.\n");
   return 0;
 }
