@@ -70,18 +70,22 @@ typedef struct q {
 // create new empty queue (head and tail are set to NULL)
 queue_t* newQueue() {
   queue_t* q_p;   // temp pointer to hold newly created queue
-
+  q_p = (queue_t*)malloc(sizeof(queue_t));
+  if (q_p != NULL) {
+    q_p->head_p = NULL;
+    q_p->tail_p = NULL;
+  }
   // ***** INSERT YOUR CODE HERE *****
-  
   return q_p;
 };
 
 // is the queue empty?
 bool isEmpty(queue_t* q_p) {
   bool b = true;   // temporary bool to hold return value - initalize to default value
-
-  // ***** INSERT YOUR CODE HERE *****
-  
+  if (q_p->head_p != NULL || q_p->tail_p != NULL){
+  return false;
+  }
+  // ***** INSERT YOUR CODE HERE ***** 
   return b;
 };
 
@@ -93,14 +97,14 @@ void enqueue(queue_t* q_p, int d) {
 
     if (isEmpty(q_p)) {
       // queue is empty so insertion is easy
-
-      // ***** INSERT YOUR CODE HERE *****
-
+      q_p->head_p = n_p;
+      q_p->tail_p = n_p;
+    // ***** INSERT YOUR CODE HERE *****
     } else {
       // queue is not empty
-
-      // ***** INSERT YOUR CODE HERE *****
-
+    q_p->tail_p->right_p = n_p;
+    q_p->tail_p = q_p->tail_p->right_p;
+    // ***** INSERT YOUR CODE HERE *****
     }    
   }
   
@@ -120,12 +124,15 @@ int dequeue(queue_t* q_p) {
 
 	if (q_p->head_p  == q_p->tail_p) {      
           // only one node in the queue, clear queue head and tail 
-
+	  q_p->head_p = NULL;
+	  q_p->tail_p = NULL;
+	  return t;
           // ***** INSERT YOUR CODE HERE *****
 	  
 	} else {
           // mulitple nodes in queue, clean up head pointer and new head of queue
-
+	  q_p->head_p = q_p->head_p->right_p;
+	  return t;
 	  // ***** INSERT YOUR CODE HERE *****
 	  
 	}
@@ -181,14 +188,14 @@ int main () {
     printf("enqueue[2] %d\n", t);
     enqueue(q2_p, t);    
   }
-
+  
   printf("\n");
-
+ 
   printf("dequeue[1]: ");
   while (!isEmpty(q1_p)) {
     printf("%d ", dequeue(q1_p));
   }
-
+  
   printf("\n");
   
   printf("dequeue[2]: ");
