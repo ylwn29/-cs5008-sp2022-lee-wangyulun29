@@ -88,4 +88,7 @@ printf("\n");
 printf("The element at the front of the queue is: %d\n",peek());
 return 0;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 18584a3f01bb0b5a5284b11f56233d89ea5979a8
