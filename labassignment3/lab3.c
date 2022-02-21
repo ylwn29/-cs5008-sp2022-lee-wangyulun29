@@ -14,8 +14,7 @@ void sort(int* arr, int size) {
 		    arr[j] = temp;	    
 		}
 	}
-    }
-    
+    }    
 }
 
 int main(){
@@ -25,7 +24,13 @@ int main(){
 
   //insert your code here
   sort(arr,12);
-  printf("%d",arr[11]);
+  for (int n=0;n<size-1;n++){ 
+     if (arr[n]==arr[n+1]){
+	printf("The array has duplicate elements\n");	
+  	return 0;
+     }
+  }
+  printf("The array has no duplicate elements\n"); 
 
 return 0;
 }
