@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Yulun Wang	
+// email: wang.yulun@northeastern.edu
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,13 +37,41 @@ void mergeIt(
 	   int leftStop,
 	   int rightStart,
 	   int rightStop) {
-  
-
   // ADD YOUR CODE HERE
-  
+  int i,j,k;
+  int nL = leftStop-leftStart+1;
+  int nR = rightStop-rightStart+1;
+  char L[nL],R[nR];
+
+  for (i=0;i<nL;i++)
+	L[i] = data[leftStart+i];
+  for (j=0;j<nR;j++)
+	R[j] = data[rightStart+j];
+  i=0;
+  j=0;
+  k=leftStart;
+  while (i<nL && j<nR){
+  	if (L[i] <= R[j]){
+	    data[k] = L[i];
+	    i++;
+	}else {
+	    data[k] = R[j];
+	    j++;
+	}
+	k++;
+  }
+  while (i<nL){
+	data[k] = L[i];
+	i++;
+	k++;
+  }
+  while (j<nR){
+	data[k] = R[j];
+	j++;
+	k++;
+  }
   return;
 }
-
 
 
 // break data array up into halves until down to single elements
