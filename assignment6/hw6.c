@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Yulun Wang
+// email: wang.yulun@northeastern.edu
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -223,7 +223,7 @@ tnode_t* dequeue(queue_t* qp) {
 void freeQueue(queue_t* qp) {
   if (qp != NULL) {
     // make sure the queue is empty
-    while (!isEmpty(qp)) {
+    while (isEmpty(qp)) {
       dequeue(qp);
     }
 
@@ -244,27 +244,47 @@ void freeQueue(queue_t* qp) {
 
 void preorder (tnode_t* np) {
   // INSERT YOUR CODE HERE
-
-  return;
+  if (np == NULL)
+    return;
+  printf("%c", np->data);
+  preorder(np->left);
+  preorder(np->right);
 }
 
 void inorder (tnode_t* np) {
   // INSERT YOUR CODE HERE
-  
-  return;
+  if (np == NULL)
+    return;
+  inorder(np->left);
+  printf("%c", np->data);
+  inorder(np->right);
 }
 
 void postorder (tnode_t* np) {
   // INSERT YOUR CODE HERE
-  
-  return;
+  if (np == NULL)
+    return;
+  postorder(np->left);
+  postorder(np->right);
+  printf("%c", np->data);
 }
 
 
 void breadthFirst (tnode_t* root) {
   // INSERT YOUR CODE HERE
-  
-  return;
+  if (root == NULL) 
+    return;
+  queue_t* Q;
+  Q = (queue_t*)malloc(sizeof(queue_t));
+  enqueue(Q, root);
+  while (!isEmpty(Q)) {
+    tnode_t* current = dequeue(Q);
+    printf("%c", current->data);
+    if (current->left != NULL)
+	    enqueue(Q, current->left);
+    if (current->right != NULL)
+	    enqueue(Q, current->right);
+  }
 }
 
 
