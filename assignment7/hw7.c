@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Yulun Wang
+// email: wang.yulun@northeastern.edu
 
 // format of document is a bunch of data lines beginning with an integer (rank which we ignore)
 // then a ',' followed by a double-quoted string (city name)
@@ -91,7 +91,7 @@ int main () {
 	    // look a digit to confirm a valid line
 	    if (isDigit(inputLine[nextChar])) {
 	      state = S1;
-	      appendChar(temp, inputLine[nextChar]);
+	      //appendChar(temp, inputLine[nextChar]);
 	    } else {
 	      state = ERRORSTATE;
 	    }  
@@ -99,8 +99,73 @@ int main () {
 
 
 	  // ADD YOUR CODE HERE
- 
+	  case S1:
+	    if (isDigit(inputLine[nextChar])) {
+	      state = S1;
+	      //appendChar(temp, inputLine[nextChar]);
+	    } else if (inputLine[nextChar] == ','){
+	      state = S2;
+	      //appendChar(temp, inputLine[nextChar]);
+	    } else {
+	      state = ERRORSTATE;
+	    }
+	    break;
+
+	  case S2:
+	    if (inputLine[nextChar] == '"'){
+	      state = S3;
+              appendChar(temp, inputLine[nextChar]);
+	    } else {
+	      state = ERRORSTATE;
+	    }
+	    break;
+
+	  case S3:
+	    if (inputLine[nextChar] != '"'){
+	      state = S3;
+	      appendChar(temp, inputLine[nextChar]);
+	    } else if (inputLine[nextChar] == '"'){
+	      state = S4;
+	      //appendChar(temp, inputLine[nextChar]);
+	    } else {
+	      state = ERRORSTATE;
+	    }
+	    strcpy(cityStr, temp);
 	    
+	    break;
+
+	  case S4:
+	    if (inputLine[nextChar] == ','){
+	      state = S5;
+	      appendChar(temp, inputLine[nextChar]);
+	    } else {
+	      state = ERRORSTATE;
+	    }
+	    break;
+
+	  case S5:
+	    if (inputLine[nextChar] == '"'){
+	      state = S6;
+	      appendChar(temp, inputLine[nextChar]);
+	    } else if (inputLine[nextChar] == '('){
+	      state = ACCEPTSTATE;
+	    } else {
+	      state = ERRORSTATE;
+	    }
+	    break;
+
+	  case S6:
+	    if (isDigit(inputLine[nextChar]) || inputLine[nextChar] == ','){
+	      state = S6;
+	      appendChar(temp, inputLine[nextChar]);
+	    } else if (inputLine[nextChar] == '"'){
+	      state = ACCEPTSTATE;
+	    } else {
+	      state = ERRORSTATE;
+	    }
+	    //strcpy(popInt, temp)
+	    break;
+
 	  case ACCEPTSTATE:
 	    // nothing to do - we are done!
 	    break;
