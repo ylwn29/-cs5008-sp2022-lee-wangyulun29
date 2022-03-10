@@ -91,7 +91,7 @@ int main () {
 	    // look a digit to confirm a valid line
 	    if (isDigit(inputLine[nextChar])) {
 	      state = S1;
-	      //appendChar(temp, inputLine[nextChar]);
+	      appendChar(temp, inputLine[nextChar]);
 	    } else {
 	      state = ERRORSTATE;
 	    }  
@@ -102,42 +102,40 @@ int main () {
 	  case S1:
 	    if (isDigit(inputLine[nextChar])) {
 	      state = S1;
-	      //appendChar(temp, inputLine[nextChar]);
+	      appendChar(temp, inputLine[nextChar]);
 	    } else if (inputLine[nextChar] == ','){
 	      state = S2;
-	      //appendChar(temp, inputLine[nextChar]);
+	      //lineNum = strtol(temp, NULL, 10);
+	      strcpy(temp, "");
 	    } else {
 	      state = ERRORSTATE;
 	    }
 	    break;
 
 	  case S2:
-	    if (inputLine[nextChar] == '"'){
+	    if (inputLine[nextChar] == '\"'){
 	      state = S3;
-              appendChar(temp, inputLine[nextChar]);
 	    } else {
 	      state = ERRORSTATE;
 	    }
 	    break;
 
 	  case S3:
-	    if (inputLine[nextChar] != '"'){
+	    if (inputLine[nextChar] != '\"'){
 	      state = S3;
 	      appendChar(temp, inputLine[nextChar]);
-	    } else if (inputLine[nextChar] == '"'){
+	    } else if (inputLine[nextChar] == '\"'){
 	      state = S4;
-	      //appendChar(temp, inputLine[nextChar]);
+              strcpy(cityStr, temp);
+	      strcpy(temp, "");
 	    } else {
 	      state = ERRORSTATE;
 	    }
-	    strcpy(cityStr, temp);
-	    
 	    break;
 
 	  case S4:
 	    if (inputLine[nextChar] == ','){
 	      state = S5;
-	      appendChar(temp, inputLine[nextChar]);
 	    } else {
 	      state = ERRORSTATE;
 	    }
@@ -146,24 +144,28 @@ int main () {
 	  case S5:
 	    if (inputLine[nextChar] == '"'){
 	      state = S6;
-	      appendChar(temp, inputLine[nextChar]);
+	      popInt = 0;
 	    } else if (inputLine[nextChar] == '('){
 	      state = ACCEPTSTATE;
+	      popInt = 0;
 	    } else {
 	      state = ERRORSTATE;
 	    }
 	    break;
 
 	  case S6:
-	    if (isDigit(inputLine[nextChar]) || inputLine[nextChar] == ','){
+	    if (isDigit(inputLine[nextChar])){
 	      state = S6;
-	      appendChar(temp, inputLine[nextChar]);
-	    } else if (inputLine[nextChar] == '"'){
+	      int digit = inputLine[nextChar] - '0';
+	      popInt = popInt *10 +digit;
+
+	    } else if (inputLine[nextChar] == ','){
+	      state = S6;
+	    } else if (inputLine[nextChar] == '\"'){
 	      state = ACCEPTSTATE;
 	    } else {
 	      state = ERRORSTATE;
 	    }
-	    //strcpy(popInt, temp)
 	    break;
 
 	  case ACCEPTSTATE:
