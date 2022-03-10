@@ -81,10 +81,14 @@ queue_t* newQueue() {
 // is the queue empty?
 bool isEmpty(queue_t* q_p) {
   bool b = true;   // temporary bool to hold return value - initalize to default value
-  if (q_p->head_p != NULL || q_p->tail_p != NULL){
-  return false;
+
+  if (q_p != NULL){ // have to check whether the pointer is NULL or not
+    if (q_p->head_p != NULL || q_p->tail_p != NULL){ 
+      return false;
+    }
   } 
   return b;
+
 };
 
 // function to add a new node with data d to tail of the queue
