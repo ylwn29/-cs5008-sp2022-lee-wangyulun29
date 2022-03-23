@@ -1,5 +1,5 @@
-/*Enter your name here*/
-/* Enter your email here*/
+/*Enter your name here*: Yulun Wang*/
+/* Enter your email here*: wang.yulun@northeastern.edu*/
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -34,7 +34,13 @@ scanf("%d",&(temp->priority));
 int pri=temp->priority;
 
 /*---insert your code here----*/
+  if (front == NULL){
     
+  }
+  if (front == NULL || pri > front->priority){
+    temp->next = front;
+    front = temp;
+  }	  
     
     
     
