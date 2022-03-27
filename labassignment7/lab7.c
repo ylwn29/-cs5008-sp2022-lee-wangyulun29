@@ -34,25 +34,38 @@ scanf("%d",&(temp->priority));
 int pri=temp->priority;
 
 /*---insert your code here----*/
-  if (front == NULL){
-    
-  }
+  node_t *current = front;	
+//need to place front pointer in a new current pointer to traverse the queue, otherwise the head of the queue keep altering
   if (front == NULL || pri > front->priority){
     temp->next = front;
     front = temp;
   }	  
-    
-    
-    
+  
+  p = (node_t*)malloc(sizeof(node_t));
+  while(current != NULL && pri <= current->priority){  
+    p = current;
+    current = current->next;
+  }
+  temp->next = current;
+  p->next = temp;
+  return front;
 }
 
 /* Delete the patient who is at the front*/
 node_t *delete(struct node *front)
-{
-    
+{   
     /*---insert your code here---*/
-    
-    
+   
+    if (front == NULL){
+      printf("\nTHERE IS NO PATIENT");
+    }
+    node_t *temp = front;    
+    printf("Deleted Record is: %d\n",temp->reg);
+    printf("Patient's name is:%s\n",temp->name);
+    printf("Patient's age:%d\n",temp->age);
+    front = front->next;
+    free(temp);
+    return front;
 }
 
 /* To display the patients records */
