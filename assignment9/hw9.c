@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Yulun Wang
+// email: wang.yulun@northeastern.edu
 
 
 #include <stdio.h>
@@ -226,12 +226,20 @@ int main () {
   enqueue(q,0);
 
   printf("\nBREADTH FIRST TRAFERSAL\n");
+  printf("NODE: 0\n");
   while (!isEmpty(q)) {
-
-    // INSERT YOUR CODE HERE
     
+    // INSERT YOUR CODE HERE
+    current = dequeue(q);
+    done[current] = true;
+    for (j=0; j<GSIZE; j++){
+      if (E[current][j] && !done[j]){
+        done[j] = true;
+	printf("NODE: %d\n", j);
+	enqueue(q, j);
+      }
+    }
   }
-
   // print out nodes that are unreachable
   printf("\nUNREACHABLE NODES: ");
   for (i=0; i<GSIZE; i++) {
