@@ -1,5 +1,5 @@
-//enter your email here
-//enter your name here
+//enter your email here: wang.yulun@northeastern.edu
+//enter your name here: Yulun Wang
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,37 +20,73 @@ typedef struct Graph
 /*A function to create a newnode*/
 node* createNode(char* name)
 {
-    
+    node* newNode = (node*)malloc(sizeof(node));
+    strcpy(newNode->name, name);
+    newNode->next = NULL;
+    return newNode;
 }
 
 /*A function to create a graph with an array of adjacency lists which is= numberof vertices*/
 Graph* createGraph(int vertices)
 {
-    
+    Graph* graph = (Graph*)malloc(sizeof(Graph));
+    graph->numberOfVertices = vertices;
+    graph->adjLists = (struct node**)malloc(vertices* sizeof(struct node*));
+    int i;
+    for (i=0; i<graph->numberOfVertices; i++) {
+      graph->adjLists[i] = NULL;
+    }
+    return graph;
 }
 
 /* function to count Number of listspresent in the graph */
 int numberoflistspresent(Graph* graph)
 {
-    
-    
+    int i, j=0;
+    for (i=0; i<graph->numberOfVertices;i++){
+      if (graph->adjLists[i]!= NULL){
+        j++;
+      }
+    }
+    return j;
 }
-/*searching the persons who are already there in the list*/
+/*searching the persons who are already there in the list and his position in the list*/
 int search(char* name, Graph* graph)
 {
-    
+    int i;
+    for (i=0;i<numberoflistspresent(graph);i++){
+      if (strcmp(graph->adjLists[i]->name, name)==0){
+        return i;//position of person
+      }
+    }
+    return -1;//when person is not found
 }
 /*adds an edge to an undirected graph*/
 void addConnection(Graph* graph, char* person, char* friend){
-    int n=numberoflistspresent(graph);
+    int n=numberoflistspresent(graph);// number of lists which are already there in the graph
     int p = search(person, graph);//search for the person in the graph p-> position of person in the list
     
 //insert your code here
-    
-    
-    
-    
-    
+    if (n==0){
+      node* newPerson = createNode(person);
+      graph->adjLists[0] = newPerson;
+      node* newFriend = createNode(friend);
+      newPerson->next = newFriend;
+    } else {
+      if (p>=0){
+        node* temp = graph->adjLists[p];
+        while (temp->next!=NULL){ //if we can't tell if temp is NULL or not, need to check if temp==NUll first
+	  temp = temp->next;
+	}
+        node* newFriend = createNode(friend);
+	temp->next = newFriend;
+      } else {//if (p<0)
+	node* newPerson = createNode(person);
+	node* newFriend = createNode(friend);
+	graph->adjLists[n] = newPerson;
+	newPerson->next = newFriend;
+      }    
+    }
 }
 /*function to print the adjacency list representation of a graph*/
 void printGraph(Graph* graph)
