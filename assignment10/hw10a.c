@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Yulun Wang
+// email: wang.yulun@northeastern.edu
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +27,7 @@ bool setNotEmpty(bool s[], int size) {
 
   result = false;
   for (i=1; i<size; i++) {
-    result = result || s[i];
+	result = result || s[i];
   }
 
   return result;
@@ -155,53 +155,71 @@ int main () {
 
   // DIJKSTRA: create table T[V] = <infinity, undefined>
   // ********** INSERT YOUR CODE HERE **********
-
+  for (i=1; i<GSIZE; i++){
+    if (E[0][i] != 0){
+      T[i].distance = E[0][i];
+      T[i].lastStep = 0;
+    } else {
+      T[i].distance = INFINITY;
+    } 
+  }
   // DIJKSTRA: T[source].distance = 0
   // ********** INSERT YOUR CODE HERE **********
-
+  T[0].distance = 0;
+  T[0].lastStep = -1;
   // DIJKSTRA: Create set Q = set(V)
   // ********** INSERT YOUR CODE HERE **********
-
-
-  // DIJKSTRA: while Q is not empty
+  for (i=0; i<GSIZE; i++){
+    Q[i] = true;
+  }
+  // DIJKSTRA: while Q is not empty(not all elements are false)
   while (setNotEmpty(Q,GSIZE)) {
-    // DIJKSTRA: u = min q in Q of T[q].distance
+    // DIJKSTRA: u = min q in Q of T[q].distance  minDistance(trow_t table[], int size, bool valid[])
     // ********** INSERT YOUR CODE HERE **********
-
+    u = minDistance(T, GSIZE, Q);
+    Q[u] = true;
+    //printf("uuuu is %d\n",u);
     // check for errors
     if (u<0) {
       printf("*** INVALID NODE FOUND while finding min distance\n");
       return -1;
     }
 
-    // DIJKSTRA: S = neighbors(u)
+    // DIJKSTRA: S = neighbors(u)  setNeighbors(bool neighbors[], graph_t g, int size, int v)
     // ********** INSERT YOUR CODE HERE **********
-
-
-    // DIJKSTRA: Q = Q – u
+    setNeighbors(S, E, GSIZE, u); 
+    //printf("Neighbors of u are:");
+    //printSet(S, GSIZE);
+    // DIJKSTRA: Q = Q – u  removeVertex(int v, bool s[], int size) 
     // ********** INSERT YOUR CODE HERE **********
-
-
+    removeVertex(u, Q, GSIZE); 
+    //printf("Q after u is removed:");
+    //printSet(Q, GSIZE);
+    
     // DIJKSTRA: for each neighbor v of u (ignore vertices that we have already finished)
     for (v=0; v<GSIZE; v++) {
       if (S[v] && Q[v]) {
         // DIJKSTRA: d = T[u].distance + E[u,v]
         // ********** INSERT YOUR CODE HERE **********
-
-
+        d = T[u].distance + E[u][v];
+	// printf("d = %d\n",d);
         // DIJKSTRA: if (d < T[v].distance)
 	if (d < T[v].distance) {
   	  // DIJKSTRA: //shorter path found
   	  // DIJKSTRA: T[v].distance = d
           // ********** INSERT YOUR CODE HERE **********
-
+          T[v].distance = d;
+	  //printf("T[v].distance = %d\n",T[v].distance);
 	  // DIJKSTRA: T[v].lastStep = u
           // ********** INSERT YOUR CODE HERE **********
+	  T[v].lastStep = u;
+	  //printf("T[v].lastStep = %d\n", T[v].lastStep);
 	}
+	
       }
     }
     // DIJKSTRA: //done with u
-
+    
   }
 
   printTable(T, GSIZE, 0);
