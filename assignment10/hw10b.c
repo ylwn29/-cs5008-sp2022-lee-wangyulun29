@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Yulun Wang
+// email: wang.yulun@northeastern.edu
 
 #include <stdio.h>
 #include <stdlib.h> 		// for qsrot
@@ -84,14 +84,36 @@ int kruskal(Fedge e[],int n) {
     int mst_e_n = 0; 			    // # of edges for mst
 
    qsort(e, edge_num, sizeof(Fedge), compare); // sort edges using qsort
+   //printf("edge_num is: %d\n", edge_num);
 
    // Add Your code here
+   // initialize the parent set 
+   for (i=0; i<VSIZE; i++){
+     make_set(i);
+   }
 
+   for (i=0; i<edge_num; i++){
+     u = e[i].u;
+     v = e[i].v;
+ 
+     if (find_set(u) != find_set(v)){
+       mst_e_n++;
+       mst_e = mst_e + e[i].key;
+       union_set(u, v);
+     } else{
+       printf("Edge %d and edge %d cause Cycle!!\n", u, v);
+     }
+     
+     if (mst_e_n == VSIZE-1){
+       break;
+     }
+   }
    return mst_e; 
 }
 
 int main() {
-    int mst;  
+    int mst; 
+
     int graph[VSIZE][VSIZE] = { // input_graph
 	{   0,  4,INF,INF,INF,INF,INF,  8,INF},
 	{   4,  0,  8,INF,INF,INF,INF, 11,INF},
@@ -102,13 +124,24 @@ int main() {
 	{ INF,INF,INF,INF,INF,  2,  0,  1,  6},
 	{   8, 11,INF,INF,INF,INF,  1,  0,  7},
 	{ INF,INF,  2,INF,INF,INF,  6,  7, 0 }};
-
     Fedge edge_set[INF]; 
-
     int i,j;
 
     // Add your code here to create edge_set
-
+    for (i=0; i<VSIZE; i++){
+      for (j=0; j<VSIZE; j++){
+        if (graph[i][j] != 0 && graph[i][j] != INF && i<j){	    		
+  	    edge_set[edge_num].key = graph[i][j];
+	    edge_set[edge_num].u = i;
+	    edge_set[edge_num].v = j; 
+	    //printf("edge_num: %d\n",edge_num);	    
+	    //printf("key: %d | graph[i][j]: %d\n", edge_set[edge_num].key, graph[i][j]);
+	    //printf("u: %d | i: %d\n", edge_set[edge_num].u, i);
+	    //printf("v: %d | j: %d\n\n", edge_set[edge_num].v, j);
+	    edge_num++;	 
+        }
+      }
+    }
     mst=kruskal(edge_set, VSIZE); 
     printf("Min cost is %d.\n", mst);
 }
