@@ -1,5 +1,5 @@
-// Enter your name here
-//Enter your email here
+// Enter your name here: Yulun Wang
+//Enter your email here: wang.yulun@northeastern.edu
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -22,7 +22,7 @@ int isEmpty(int front)
         return 0;
 }
 
-//Dequeue function to dequeue a vertex from the queue*/
+/*Dequeue function to dequeue a vertex from the queue*/
 int dequeue(Queue *q)
 {
     
@@ -98,17 +98,26 @@ void topologicalOrder(int arr[][MAX], Queue *t, int n)
     int j=0,delNode,i;
     int result[MAX],indeg[MAX];
     for(i=1;i<=n;i++){
-        indeg[i]=find_indegree(arr,i,n);
+        indeg[i]=find_indegree(arr,i,n);//first check if there is cycle
         if(indeg[i]==0)
             enqueue(t,i);
     }
-    
-    
-    
-    
-    //insert your code here
-    
-    
+ 
+ //insert your code here
+
+    while (!isEmpty(t->front)){
+      delNode = dequeue(t);
+      result[j++] = delNode;
+      for (i=1; i<=n; i++){
+        if (arr[delNode][i] == 1){
+	  indeg[i]-=1;
+          if (indeg[i] == 0){
+	    enqueue(t,i);
+	  }
+	}
+      }
+    } 
+            
     //display the result
     printf("topological ordering\n");
     for(i=0; i<j;i++)
