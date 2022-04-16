@@ -67,20 +67,20 @@ void addConnection(Graph* graph, char* person, char* friend){
     int p = search(person, graph);//search for the person in the graph p-> position of person in the list
     
 //insert your code here
-    if (n==0){
+    if (n==0){//add the first person
       node* newPerson = createNode(person);
       graph->adjLists[0] = newPerson;
       node* newFriend = createNode(friend);
       newPerson->next = newFriend;
     } else {
-      if (p>=0){
+      if (p>=0){//the person has already in the graph
         node* temp = graph->adjLists[p];
         while (temp->next!=NULL){ //if we can't tell if temp is NULL or not, need to check if temp==NUll first
 	  temp = temp->next;
 	}
         node* newFriend = createNode(friend);
 	temp->next = newFriend;
-      } else {//if (p<0)
+      } else {//if (p<0) the person cannot be found in graph
 	node* newPerson = createNode(person);
 	node* newFriend = createNode(friend);
 	graph->adjLists[n] = newPerson;
