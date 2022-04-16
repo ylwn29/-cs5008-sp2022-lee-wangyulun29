@@ -1,5 +1,5 @@
-/* Enter your name here*/
-/* Enter your email here*/
+/* Enter your name here: Yulun Wang*/
+/* Enter your email here: wang.yulun@northeastern.edu*/
 
 #include<stdio.h>
 #define MAXN 50       /* largest number of books */
@@ -71,10 +71,18 @@ void partition(int s[], int n, int k)
     
     
     /*Insert your code here*/
-    
-  
-    
-    
+    //just base case:    
+    p[0]=0;
+    for (i=1;i<=n;i++){
+      p[i]=p[i-1]+s[i];
+      m[i][1] = sum(s,1,i);
+
+    }
+    for (j=1;j<=k;j++){
+	    m[1][j] = s[1];
+	}
+
+        
 /* 2 to k partitions*/
 for (i=2; i<=n; i++)//books
     
@@ -85,7 +93,7 @@ for (j=2; j<=k; j++)//workers
     for (x=1; x<=i; x++)
     {
     cost = max(m[x][j-1],p[i]-p[x]);
-       //cost = max(m[x][j-1],sum(s,x+1,i));O(kN2)
+       //cost = max(m[x][j-1],sum(s,x+1,i));O(kN2) equivalent to above
         if(m[i][j]>cost)
             {
             m[i][j]=cost;
